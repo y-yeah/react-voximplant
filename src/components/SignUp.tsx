@@ -21,14 +21,17 @@ const SignUp: React.FC = () => {
       console.error("Error: ", err);
     }
   };
-  const onChangeUsername = (e: { target: { value: string } }) => {
-    setUsername(e.target.value);
+  const onChangeUsername = (e: SyntheticEvent) => {
+    const target = e.target as HTMLInputElement;
+    setUsername(target.value);
   };
-  const onChangeUserDisplayName = (e: { target: { value: string } }) => {
-    setUserDisplayName(e.target.value);
+  const onChangeUserDisplayName = (e: SyntheticEvent) => {
+    const target = e.target as HTMLInputElement;
+    setUserDisplayName(target.value);
   };
-  const onChangePassword = (e: { target: { value: string } }) => {
-    setPassword(e.target.value);
+  const onChangePassword = (e: SyntheticEvent) => {
+    const target = e.target as HTMLInputElement;
+    setPassword(target.value);
   };
   return (
     <div className="jumbotron vertical-center">
