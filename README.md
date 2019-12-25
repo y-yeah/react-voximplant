@@ -1,3 +1,8 @@
+参考記事：
+[React.js (TypeScript) + Voximplantで動画アプリを作る(Qiita)](https://qiita.com/yumaYeah/items/a2931e3f9bfd9f3b0670)
+
+***
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
