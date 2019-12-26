@@ -6,9 +6,23 @@ const SignUp: React.FC = () => {
   const [userDisplayName, setUserDisplayName] = useState("");
   const [password, setPassword] = useState("");
 
+  const onChangeUsername = (e: SyntheticEvent) => {
+    const target = e.target as HTMLInputElement;
+    setUsername(target.value);
+  };
+
+  const onChangeUserDisplayName = (e: SyntheticEvent) => {
+    const target = e.target as HTMLInputElement;
+    setUserDisplayName(target.value);
+  };
+
+  const onChangePassword = (e: SyntheticEvent) => {
+    const target = e.target as HTMLInputElement;
+    setPassword(target.value);
+  };
+
   const onSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log(username, password);
 
     try {
       const res = await axios.post("/addUser", {
@@ -21,18 +35,7 @@ const SignUp: React.FC = () => {
       console.error("Error: ", err);
     }
   };
-  const onChangeUsername = (e: SyntheticEvent) => {
-    const target = e.target as HTMLInputElement;
-    setUsername(target.value);
-  };
-  const onChangeUserDisplayName = (e: SyntheticEvent) => {
-    const target = e.target as HTMLInputElement;
-    setUserDisplayName(target.value);
-  };
-  const onChangePassword = (e: SyntheticEvent) => {
-    const target = e.target as HTMLInputElement;
-    setPassword(target.value);
-  };
+
   return (
     <div className="jumbotron vertical-center">
       <div className="container">

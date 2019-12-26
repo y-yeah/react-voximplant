@@ -17,11 +17,14 @@ router.post("/addUser", (req, res) => {
   const addUser = async () => {
     const route = "/AddUser";
     const path = `${baseUrl}${route}/?account_id=${accountId}&api_key=${apiKey}&user_name=${username}&user_display_name=${userDisplayName}&user_password=${password}&application_id=${appId}`;
+
     try {
       const info = await axios.post(path, null);
+
       if (info.data && info.data.error) {
         throw info.data.error;
       }
+
       res.status(200).send(info.data);
     } catch (error) {
       console.error(error);

@@ -4,11 +4,11 @@ import * as VoxImplant from "voximplant-websdk";
 import { EventHandlers } from "voximplant-websdk/EventHandlers";
 import { Call } from "voximplant-websdk/Call/Call";
 
+const appName = process.env.REACT_APP_APP_NAME;
+const appUsername = process.env.REACT_APP_USER_NAME;
+
 const Video: React.FC = () => {
   const sdk = VoxImplant.getInstance();
-
-  const appName = process.env.REACT_APP_APP_NAME;
-  const appUsername = process.env.REACT_APP_USER_NAME;
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -101,8 +101,8 @@ const Video: React.FC = () => {
   };
 
   const onMediaElement = (e: EventHandlers.MediaElementCreated) => {
-    const video = e.element as HTMLVideoElement;
     const container = document.getElementById("voximplant_container");
+    const video = e.element as HTMLVideoElement;
     video.width = 320;
     video.height = 240;
     container?.appendChild(video);
@@ -162,16 +162,16 @@ const Video: React.FC = () => {
 
   const onClickCall = () => {
     const callButton = document.getElementById("callButton");
+    const userInput = document.getElementById(
+      "usernameForVideo"
+    ) as HTMLInputElement;
+    const passInput = document.getElementById(
+      "passwordForVideo"
+    ) as HTMLInputElement;
+    const selectPicker = document.getElementsByClassName("selectpicker")[0];
 
     login(username, password)
       .then(() => {
-        const userInput = document.getElementById(
-          "usernameForVideo"
-        ) as HTMLInputElement;
-        const passInput = document.getElementById(
-          "passwordForVideo"
-        ) as HTMLInputElement;
-
         console.log("Login successful");
 
         userInput.value = "";
@@ -180,7 +180,6 @@ const Video: React.FC = () => {
         console.log("Calling...");
       })
       .then(() => {
-        const selectPicker = document.getElementsByClassName("selectpicker")[0];
         callButton?.setAttribute("disabled", "true");
         selectPicker.classList.add("hidden");
       })
@@ -188,18 +187,18 @@ const Video: React.FC = () => {
   };
 
   const onClickAnswer = () => {
+    const userInput = document.getElementById(
+      "usernameForVideo"
+    ) as HTMLInputElement;
+    const passInput = document.getElementById(
+      "passwordForVideo"
+    ) as HTMLInputElement;
+    const callerInput = document.getElementById(
+      "callerName"
+    ) as HTMLInputElement;
+
     login(username, password)
       .then(async () => {
-        const userInput = document.getElementById(
-          "usernameForVideo"
-        ) as HTMLInputElement;
-        const passInput = document.getElementById(
-          "passwordForVideo"
-        ) as HTMLInputElement;
-        const callerInput = document.getElementById(
-          "callerName"
-        ) as HTMLInputElement;
-
         console.log("Login successful");
 
         userInput.value = "";
@@ -230,6 +229,7 @@ const Video: React.FC = () => {
   // SDKの初期化
 
   const [once, setOnce] = useState(false);
+
   if (!once) {
     const initialize = () => {
       try {
@@ -248,13 +248,16 @@ const Video: React.FC = () => {
         console.error(e);
       }
     };
+
     initialize();
+
     sdk.on(VoxImplant.Events.SDKReady, onSdkReady);
     sdk.on(VoxImplant.Events.ConnectionEstablished, onConnectionEstablished);
     sdk.on(VoxImplant.Events.ConnectionFailed, onConnectionFailed);
     sdk.on(VoxImplant.Events.ConnectionClosed, onConnectionClosed);
     sdk.on(VoxImplant.Events.AuthResult, onAuthResult);
     sdk.on(VoxImplant.Events.IncomingCall, onIncomingCall);
+
     setOnce(true);
   }
 
